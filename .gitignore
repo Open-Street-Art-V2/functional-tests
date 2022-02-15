@@ -1,0 +1,4 @@
+node_modules/
+osa-back-end/
+osa-front-end/
+.env
