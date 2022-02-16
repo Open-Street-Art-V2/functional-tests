@@ -31,11 +31,9 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
 
     await driver.wait(until.elementLocated(By.css('#email-helper-text')));
 
-    const wrongEmail = await driver
-      .findElement(By.css('#email-helper-text'))
-      .getText();
     assert(
-      wrongEmail === 'Email invalide',
+      (await driver.findElement(By.css('#email-helper-text')).getText()) ===
+        'Email invalide',
       'wrong email message not displayed properly ! '
     );
 

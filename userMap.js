@@ -120,31 +120,28 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
 
     console.log('description is displayed correctly !');
 
-    // assert(
-    //   (await driver
-    //     .findElement(
-    //       By.css(
-    //         '#root > div > div.popupCard2 > div.px-6.py-4 > figcaption > div.text-sky-500.dark:text-sky-400.text-lg.mt-3'
-    //       )
-    //     )
-    //     .isDisplayed()) === true,
-    //   'artist name is not displayed'
-    // );
+    assert(
+      (await driver
+        .findElement(
+          By.xpath('//*[@id="root"]/div/div[3]/div[2]/figcaption/div[1]')
+        )
+        .isDisplayed()) === true,
+      'artist name is not displayed'
+    );
 
-    // assert(
-    //   (await driver
-    //     .findElement(
-    //       By.css(
-    //         '#root > div > div.popupCard2 > div.px-6.py-4 > figcaption > div.text-slate-700.dark:text-slate-500'
-    //       )
-    //     )
-    //     .isDisplayed()) === true,
-    //   'Location is not displayed'
-    // );
-    // WebElementCondition;
-    // await driver.wait()
-    // await driver.wait(until.elementIsVisible, 1000);
+    console.log('artist name displayed correctly !');
+
+    assert(
+      (await driver
+        .findElement(
+          By.xpath('//*[@id="root"]/div/div[3]/div[2]/figcaption/div[2]')
+        )
+        .isDisplayed()) === true,
+      'Location is not displayed'
+    );
+    console.log('location is displayed properly !');
   } finally {
-    // await driver.quit();
+    await driver.sleep(2000);
+    await driver.quit();
   }
 })();
