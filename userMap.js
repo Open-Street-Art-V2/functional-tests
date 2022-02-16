@@ -27,41 +27,41 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     // await driver.manage().setTimeouts({ implicit: 10000 });
 
     // wait for the page to load (center position)
-    await driver.sleep(10000);
+    await driver.sleep(1000);
 
     // wait until zoom button is ready
-    await driver.wait(
-      until.elementLocated(
-        By.xpath(
-          '//*[@id="root"]/div/div[1]/div/div[2]/div[1]/div/button[2]/span'
-        )
-      ),
-      10000
-    );
+    // await driver.wait(
+    //   until.elementLocated(
+    //     By.xpath(
+    //       '//*[@id="root"]/div/div[1]/div/div[2]/div[1]/div/button[2]/span'
+    //     )
+    //   ),
+    //   10000
+    // );
 
-    //click on zoom button
-    await driver
-      .findElement(
-        By.xpath(
-          '//*[@id="root"]/div/div[1]/div/div[2]/div[1]/div/button[2]/span'
-        )
-      )
-      .click();
+    // //click on zoom button
+    // await driver
+    //   .findElement(
+    //     By.xpath(
+    //       '//*[@id="root"]/div/div[1]/div/div[2]/div[1]/div/button[2]/span'
+    //     )
+    //   )
+    //   .click();
 
-    //click a second time on the zoom butotn (to display an art on the map)
-    await driver
-      .findElement(
-        By.xpath(
-          '//*[@id="root"]/div/div[1]/div/div[2]/div[1]/div/button[2]/span'
-        )
-      )
-      .click();
+    // //click a second time on the zoom butotn (to display an art on the map)
+    // await driver
+    //   .findElement(
+    //     By.xpath(
+    //       '//*[@id="root"]/div/div[1]/div/div[2]/div[1]/div/button[2]/span'
+    //     )
+    //   )
+    //   .click();
 
     //wait for the art to show on screen
     await driver.wait(
       until.elementLocated(
         By.css(
-          '#root > div > div:nth-child(1) > div > div.overlays > div.mapboxgl-marker > svg'
+          '#root > div > div:nth-child(1) > div > div.overlays > div:nth-child(9) > svg'
         )
       ),
       5000
@@ -71,7 +71,7 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     await driver
       .findElement(
         By.css(
-          '#root > div > div:nth-child(1) > div > div.overlays > div.mapboxgl-marker > svg'
+          '#root > div > div:nth-child(1) > div > div.overlays > div:nth-child(9) > svg'
         )
       )
       .click();
@@ -140,8 +140,10 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
       'Location is not displayed'
     );
     console.log('location is displayed properly !');
+
+    await driver.findElement(By.xpath('//*[@id="closeBtn"]')).click();
   } finally {
-    await driver.sleep(2000);
+    await driver.sleep(1000);
     await driver.quit();
   }
 })();

@@ -130,7 +130,7 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     );
     console.log('redirected to the home page when logged in !');
   } finally {
-    await driver.sleep(3000);
+    await driver.sleep(1000);
     await driver.quit();
   }
 })();
