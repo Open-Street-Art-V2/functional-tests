@@ -102,7 +102,7 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
 
     await password.clear();
     await password.sendKeys(process.env.WRONG_PASSWORD);
-    await driver.sleep(1000);
+    await driver.sleep(500);
     const submit = await driver.findElement(By.xpath('//*[@id="mui-1"]'));
     await submit.click();
 
@@ -118,6 +118,17 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     );
 
     console.log('incorrect logins displayed !');
+
+    await password.clear();
+    await password.sendKeys(process.env.PASSWORD);
+    await driver.sleep(500);
+    await submit.click();
+    await driver.sleep(500);
+    assert(
+      (await driver.getCurrentUrl()) === 'http://localhost:3000/',
+      'not redirected to the correct url when logged in'
+    );
+    console.log('redirected to the home page when logged in !');
   } finally {
     await driver.sleep(3000);
     await driver.quit();
