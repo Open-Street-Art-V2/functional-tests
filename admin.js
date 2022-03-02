@@ -136,9 +136,9 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     // await description.clear();
     // await description.sendKeys(faker.lorem.sentences(4, ' '));
 
-    // const addImage = await driver.findElement(By.css('#icon-button-file1'));
-    // await addImage.sendKeys(process.env.IMAGE_PATH);
-
+    const addImage = await driver.findElement(By.css('#icon-button-file1'));
+    await addImage.sendKeys(process.env.IMAGE_PATH);
+    await driver.sleep(5000);
     //click on change position
     await driver
       .findElement(By.css('#root > div > main > div > form > div > button'))
@@ -229,7 +229,9 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     const descriptionAdd = await driver.findElement(By.css('#description'));
     await descriptionAdd.sendKeys(process.env.DESCRIPTION);
     const imageAdd = await driver.findElement(By.css('#icon-button-file'));
+    await driver.sleep(500);
     await imageAdd.sendKeys(process.env.IMAGE_PATH);
+    await driver.sleep(500);
     await driver
       .findElement(By.css('#root > div > main > div > form > div > button'))
       .click();
@@ -251,8 +253,18 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     await actions.click().perform();
 
     await driver.findElement(By.css('#addBtn')).click();
+    await driver.findElement(By.css('#mui-2')).click();
+    await driver.findElement(By.css('#retBtn')).click();
+    await actions
+      .move({
+        x: parseInt(windowSize.width / 2),
+        y: parseInt(windowSize.height / 2),
+      })
+      // .pause(3000)
+      .perform();
+    await actions.click().perform();
   } finally {
-    await driver.sleep(8000);
+    await driver.sleep(6000);
     await driver.quit();
   }
 })();
