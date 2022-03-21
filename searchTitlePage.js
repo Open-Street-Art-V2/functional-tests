@@ -34,7 +34,7 @@ const {
             until.elementLocated(By.css('#menu-button'))
         );
         select.click();  
-        await driver.sleep(1000); 
+        await driver.sleep(500); 
 
         const selectTitle = await driver.wait(
             until.elementLocated(By.css('#menu-item-0'))

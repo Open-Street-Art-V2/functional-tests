@@ -23,9 +23,11 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     await driver.sleep(1000);
 
     const loginButton = await driver.wait(
-      until.elementLocated(By.css('#login > a'))
+      until.elementLocated(By.css('button.inline-flex'))
     );
     loginButton.click();
+
+    console.log("Le forrmulaire d'authentification s'affiche.");
 
     const email = await driver.wait(until.elementLocated(By.css('#email')));
     email.sendKeys('abcde');
@@ -35,67 +37,68 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     assert(
       (await driver.findElement(By.css('#email-helper-text')).getText()) ===
         'Email invalide',
-      'wrong email message not displayed properly ! '
+      "Le message d'erreur d'email ne s'affiche pas."
     );
 
-    console.log('wrong email message displayed correctly !');
+    console.log("Le message d'erreur d'email s'affiche.");
 
     await email.clear();
-    await email.sendKeys('abcde');
-    await driver.sleep(5000);
-    await email.sendKeys('mail.com');
+    await driver.sleep(500);
+    
+    email.sendKeys(process.env.USER_EMAIL);
+
 
     const password = await driver.wait(
       until.elementLocated(By.css('#password'))
     );
     await password.sendKeys(process.env.LESS_EIGHT_PASSWORD);
 
-    const l8c = await driver.wait(
-      until.elementLocated(By.css('#password-helper-text'))
-    );
-    assert(
-      (await l8c.getText()) === 'Minimum 8 caractères',
-      'wrong password less then 8, not displayed !'
-    );
+    // const l8c = await driver.wait(
+    //   until.elementLocated(By.css('#password-helper-text'))
+    // );
+    // assert(
+    //   (await l8c.getText()) === 'Minimum 8 caractères',
+    //   'wrong password less then 8, not displayed !'
+    // );
 
-    console.log('wrong password less then 8 displayed !');
+    // console.log('wrong password less then 8 displayed !');
 
-    await password.clear();
-    await password.sendKeys(process.env.NO_UPPER_PASSWORD);
-    const nup = await driver.wait(
-      until.elementLocated(By.css('#password-helper-text'))
-    );
-    assert(
-      (await nup.getText()) ===
-        'Doit contenir au moins un caractère en majuscule',
-      'wrong password no upper case letter, not displayed !'
-    );
+    // await password.clear();
+    // await password.sendKeys(process.env.NO_UPPER_PASSWORD);
+    // const nup = await driver.wait(
+    //   until.elementLocated(By.css('#password-helper-text'))
+    // );
+    // assert(
+    //   (await nup.getText()) ===
+    //     'Doit contenir au moins un caractère en majuscule',
+    //   'wrong password no upper case letter, not displayed !'
+    // );
 
-    console.log('wrong password no upper case letter displayed !');
+    // console.log('wrong password no upper case letter displayed !');
 
-    await password.clear();
-    await password.sendKeys(process.env.NO_DIGITS_PASSWORD);
-    const ndp = await driver.wait(
-      until.elementLocated(By.css('#password-helper-text'))
-    );
-    assert(
-      (await ndp.getText()) === 'Doit contenir au moins un chiffre',
-      'wrong password at least 1 digit, not displayed !'
-    );
+    // await password.clear();
+    // await password.sendKeys(process.env.NO_DIGITS_PASSWORD);
+    // const ndp = await driver.wait(
+    //   until.elementLocated(By.css('#password-helper-text'))
+    // );
+    // assert(
+    //   (await ndp.getText()) === 'Doit contenir au moins un chiffre',
+    //   'wrong password at least 1 digit, not displayed !'
+    // );
 
-    console.log('wrong password at least 1 digit displayed !');
+    // console.log('wrong password at least 1 digit displayed !');
 
-    await password.clear();
-    await password.sendKeys(process.env.TOO_LONG_PASSWORD);
-    const tlp = await driver.wait(
-      until.elementLocated(By.css('#password-helper-text'))
-    );
-    assert(
-      (await tlp.getText()) === 'Maximum 25 caractères',
-      'password too long not displayed !'
-    );
+    // await password.clear();
+    // await password.sendKeys(process.env.TOO_LONG_PASSWORD);
+    // const tlp = await driver.wait(
+    //   until.elementLocated(By.css('#password-helper-text'))
+    // );
+    // assert(
+    //   (await tlp.getText()) === 'Maximum 25 caractères',
+    //   'password too long not displayed !'
+    // );
 
-    console.log('password too long displayed !');
+    // console.log('password too long displayed !');
 
     //#root > main > div > form > div:nth-child(2) > div > div.MuiAlert-message.css-acap47-MuiAlert-message
     //Coordonnées saisies incorrectes
@@ -108,16 +111,16 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
 
     const wp = await driver.wait(
       until.elementLocated(
-        By.xpath('//*[@id="root"]/main/div/form/div[2]/div/div[2]')
+        By.xpath('//*[@id="root"]/main/div/form/div[2]/div/div/div[2]')
       ),
-      5000
+      500
     );
     assert(
       (await wp.getText()) === 'Coordonnées saisies incorrectes',
-      'incorrect logins not displayed !'
+      "Le message d'erreur de coordonnées ne s'affiche pas."
     );
 
-    console.log('incorrect logins displayed !');
+    console.log("Le message d'erreur de coordonnées s'affiche.");
 
     await password.clear();
     await password.sendKeys(process.env.PASSWORD);
@@ -126,9 +129,9 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     await driver.sleep(500);
     assert(
       (await driver.getCurrentUrl()) === 'http://localhost:3000/',
-      'not redirected to the correct url when logged in'
+      "Pas de redirection vers la page d'accueil quand l'utilisateur est connecté."
     );
-    console.log('redirected to the home page when logged in !');
+    console.log("Redirection vers la page d'accueil quand l'utilisateur est connecté.");
   } finally {
     await driver.sleep(1000);
     await driver.quit();
