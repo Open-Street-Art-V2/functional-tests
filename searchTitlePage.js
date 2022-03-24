@@ -37,7 +37,7 @@ const {
         await driver.sleep(500); 
 
         const selectTitle = await driver.wait(
-            until.elementLocated(By.css('#menu-item-0'))
+            until.elementLocated(By.css('#menu-item-title'))
         );
         selectTitle.click();           
 
@@ -52,21 +52,20 @@ const {
         card.click();
 
         const title = await driver.wait(
-            until.elementLocated(By.css('div.py-4:nth-child(1):nth-child(1)'))
+            until.elementLocated(By.xpath(
+                '//*[@id="root"]/main/div/div[3]/div/div'
+            ))
         );
         title.getText().then((text) => {
             assert(
                 text.toLowerCase().includes(process.env.SEARCH_TITLE.toLowerCase()),
-                "La recherche par titre ne s'est pas bien passée."
+                "La recherche par titre ne s'est pas bien passée. -> KO"
             )
-            console.log("La recherche par titre s'est bien passée.")
+            console.log("La recherche par titre s'est bien passée. -> OK")
         })
         await driver.sleep(500);
-
-        const returnButton = await driver.wait(
-            until.elementLocated(By.css('#retBtn'))
-          );
-        returnButton.click(); 
+    } catch {
+        console.log("Erreur lors du lancement du test de la recherche par titre. -> KO")
     } finally {
         await driver.sleep(500);
         await driver.quit();

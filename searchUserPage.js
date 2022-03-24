@@ -28,7 +28,7 @@ const {
         const searchInput = await driver.wait(
             until.elementLocated(By.css('#search-input'))
         );
-        await searchInput.sendKeys(process.env.SEARCH_ARTIST);
+        await searchInput.sendKeys(process.env.SEARCH_USER);
 
         const select = await driver.wait(
             until.elementLocated(By.css('#menu-button'))
@@ -36,10 +36,10 @@ const {
         select.click();  
         await driver.sleep(500); 
 
-        const selectArtist = await driver.wait(
-            until.elementLocated(By.css('#menu-item-artist'))
+        const selectUser = await driver.wait(
+            until.elementLocated(By.css('#menu-item-user'))
         );
-        selectArtist.click();           
+        selectUser.click();           
 
         const button = await driver.wait(
             until.elementLocated(By.css('#search-button'))
@@ -51,20 +51,33 @@ const {
           );
         card.click();
 
-        const artist = await driver.wait(
+        const user = await driver.wait(
             until.elementLocated(By.xpath(
-              '//*[@id="root"]/main/div/div[3]/div/figcaption/div'
+              '//*[@id="root"]/main/div/div/div[2]/div'
             ))
           );
-        artist.getText().then((text) => {
+        user.getText().then((text) => {
             assert(
-                text.toLowerCase().includes(process.env.SEARCH_ARTIST.toLowerCase()),
-                "La recherche par artiste ne s'est pas bien passée. -> KO"
+                text.toLowerCase().includes(process.env.SEARCH_USER.toLowerCase()),
+                "La recherche d'utilisateur ne s'est pas bien passée. -> KO"
             )
-            console.log("La recherche par artiste s'est bien passée. -> OK")
-        })
+            console.log("La recherche d'utilisateur s'est bien passée. -> OK")
+          }).finally(() => console.log("\nConsultation d'un profil utilisateur"))
+
+        const email = await driver.wait(
+            until.elementLocated(By.xpath(
+              '//*[@id="root"]/main/H1[3]'
+            ))
+          );
+        email.getText().then((text) => {
+            assert(
+                text.toLowerCase().includes(process.env.USER_PROFIL_EMAIL.toLowerCase()),
+                "La consultation d'un profil utilisateur ne s'est pas bien passée. -> KO"
+            )
+            console.log("La consultation d'un profil utilisateur s'est bien passée. -> OK")
+          })
     } catch {
-      console.log("Erreur lors du lancement du test de la recherche par artiste. -> KO")
+      console.log("Erreur lors du lancement du test de la recherche par utilisateur. -> KO")
     } finally {
         await driver.sleep(500);
         await driver.quit();

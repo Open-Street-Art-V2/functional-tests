@@ -27,7 +27,7 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     );
     loginButton.click();
 
-    console.log("Le forrmulaire d'authentification s'affiche.");
+    console.log("Le formulaire d'authentification s'affiche. -> OK");
 
     const email = await driver.wait(until.elementLocated(By.css('#email')));
     email.sendKeys('abcde');
@@ -37,10 +37,10 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     assert(
       (await driver.findElement(By.css('#email-helper-text')).getText()) ===
         'Email invalide',
-      "Le message d'erreur d'email ne s'affiche pas."
+      "Lorsque un email avec un mauvais format est entré, aucun message d'erreur ne s'affiche. -> KO"
     );
 
-    console.log("Le message d'erreur d'email s'affiche.");
+    console.log("Lorsque un email avec un mauvais format est entré, un message d'erreur s'affiche. -> OK");
 
     await email.clear();
     await driver.sleep(500);
@@ -117,10 +117,10 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     );
     assert(
       (await wp.getText()) === 'Coordonnées saisies incorrectes',
-      "Le message d'erreur de coordonnées ne s'affiche pas."
+      "Lorsque des identifiants de connexion incorrectes sont données, aucun message d'erreur ne s'affiche. -> KO"
     );
 
-    console.log("Le message d'erreur de coordonnées s'affiche.");
+    console.log("Lorsque des identifiants de connexion incorrectes sont données, un message d'erreur s'affiche. -> OK");
 
     await password.clear();
     await password.sendKeys(process.env.PASSWORD);
@@ -129,9 +129,11 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     await driver.sleep(500);
     assert(
       (await driver.getCurrentUrl()) === 'http://localhost:3000/',
-      "Pas de redirection vers la page d'accueil quand l'utilisateur est connecté."
+      "Lorsque l'authentification réussit, pas de redirection vers la page d'accueil. -> KO"
     );
-    console.log("Redirection vers la page d'accueil quand l'utilisateur est connecté.");
+    console.log("Lorsque l'authentification réussit, redirection vers la page d'accueil. -> OK");
+  } catch {
+    console.log("Erreur lors du lancement du test. -> KO")
   } finally {
     await driver.sleep(1000);
     await driver.quit();

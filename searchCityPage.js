@@ -37,7 +37,7 @@ const {
         await driver.sleep(500); 
 
         const selectCity = await driver.wait(
-            until.elementLocated(By.css('#menu-item-1'))
+            until.elementLocated(By.css('#menu-item-city'))
         );
         selectCity.click();           
 
@@ -52,21 +52,19 @@ const {
         card.click();
 
         const location = await driver.wait(
-            until.elementLocated(By.css('div.text-slate-700'))
+            until.elementLocated(By.xpath(
+              '//*[@id="root"]/main/div/div[3]/div/figcaption/div'
+            ))
           );
         location.getText().then((text) => {
             assert(
                 text.toLowerCase().includes(process.env.SEARCH_CITY.toLowerCase()),
-                "La recherche par ville ne s'est pas bien passée."
+                "La recherche par ville ne s'est pas bien passée. -> KO"
             )
-            console.log("La recherche par ville s'est bien passée.")
+            console.log("La recherche par ville s'est bien passée. -> OK")
         })
-        await driver.sleep(500);
-
-        const returnButton = await driver.wait(
-            until.elementLocated(By.css('#retBtn'))
-          );
-        returnButton.click(); 
+    } catch {
+      console.log("Erreur lors du lancement du test de la recherche par ville. -> KO")
     } finally {
         await driver.sleep(500);
         await driver.quit();
