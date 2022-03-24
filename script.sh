@@ -1,5 +1,5 @@
 echo "Authentification" > report.txt
-node userLogin.js >> report.txt
+node login.js >> report.txt
 
 echo $'\nRecherche' >> report.txt
 node searchCityPage.js >> report.txt

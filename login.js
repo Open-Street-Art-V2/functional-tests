@@ -1,14 +1,11 @@
 const {
   Builder,
   By,
-  Key,
   until,
-  WebElementCondition,
 } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const chromedriver = require('chromedriver');
 const assert = require('assert');
-const { findSafariDriver } = require('selenium-webdriver/safari');
 require('dotenv').config();
 
 chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
@@ -17,11 +14,17 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
   const driver = await new Builder().forBrowser('chrome').build();
   try {
     // go to app
-    await driver.get('http://localhost:3000/');
+    // try to go on a page reserved to connected users
+    await driver.get('http://localhost:3000/profil');
+    assert(
+      (await driver.getCurrentUrl() === 'http://localhost:3000/'),
+      "Lorsqu'un visiteur essaie d'accéder à une page nécessitant une connexion, il n'est pas redirigé. -> KO"
+    );
+    console.log("Lorsqu'un visiteur essaie d'accéder à une page nécessitant une connexion, il est redirigé. -> OK")
 
     // wait for the page to load (center position)
     await driver.sleep(1000);
-
+    
     const loginButton = await driver.wait(
       until.elementLocated(By.css('button.inline-flex'))
     );
@@ -53,60 +56,19 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     );
     await password.sendKeys(process.env.LESS_EIGHT_PASSWORD);
 
-    // const l8c = await driver.wait(
-    //   until.elementLocated(By.css('#password-helper-text'))
-    // );
-    // assert(
-    //   (await l8c.getText()) === 'Minimum 8 caractères',
-    //   'wrong password less then 8, not displayed !'
-    // );
+    // test if the button is disabled when some fields are empty
+    await password.clear();
+    const submit = await driver.findElement(By.xpath('//*[@id="mui-1"]'));
+    assert(
+      (await submit.isEnabled()),
+      "Lorsque un des champs est vide, le bouton de validation n'est pas désactivé. -> KO"
+    );
+    console.log("Lorsque un des champs est vide, le bouton de validation est désactivé. -> OK")
 
-    // console.log('wrong password less then 8 displayed !');
-
-    // await password.clear();
-    // await password.sendKeys(process.env.NO_UPPER_PASSWORD);
-    // const nup = await driver.wait(
-    //   until.elementLocated(By.css('#password-helper-text'))
-    // );
-    // assert(
-    //   (await nup.getText()) ===
-    //     'Doit contenir au moins un caractère en majuscule',
-    //   'wrong password no upper case letter, not displayed !'
-    // );
-
-    // console.log('wrong password no upper case letter displayed !');
-
-    // await password.clear();
-    // await password.sendKeys(process.env.NO_DIGITS_PASSWORD);
-    // const ndp = await driver.wait(
-    //   until.elementLocated(By.css('#password-helper-text'))
-    // );
-    // assert(
-    //   (await ndp.getText()) === 'Doit contenir au moins un chiffre',
-    //   'wrong password at least 1 digit, not displayed !'
-    // );
-
-    // console.log('wrong password at least 1 digit displayed !');
-
-    // await password.clear();
-    // await password.sendKeys(process.env.TOO_LONG_PASSWORD);
-    // const tlp = await driver.wait(
-    //   until.elementLocated(By.css('#password-helper-text'))
-    // );
-    // assert(
-    //   (await tlp.getText()) === 'Maximum 25 caractères',
-    //   'password too long not displayed !'
-    // );
-
-    // console.log('password too long displayed !');
-
-    //#root > main > div > form > div:nth-child(2) > div > div.MuiAlert-message.css-acap47-MuiAlert-message
-    //Coordonnées saisies incorrectes
-
+    // incorrect contact details
     await password.clear();
     await password.sendKeys(process.env.WRONG_PASSWORD);
     await driver.sleep(500);
-    const submit = await driver.findElement(By.xpath('//*[@id="mui-1"]'));
     await submit.click();
 
     const wp = await driver.wait(
@@ -122,6 +84,7 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
 
     console.log("Lorsque des identifiants de connexion incorrectes sont données, un message d'erreur s'affiche. -> OK");
 
+    // correct contact details
     await password.clear();
     await password.sendKeys(process.env.PASSWORD);
     await driver.sleep(500);
@@ -132,6 +95,15 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
       "Lorsque l'authentification réussit, pas de redirection vers la page d'accueil. -> KO"
     );
     console.log("Lorsque l'authentification réussit, redirection vers la page d'accueil. -> OK");
+
+    // try to go on a page reserved to admin
+    await driver.get('http://localhost:3000/admin/validateProposal');
+    assert(
+      (await driver.getCurrentUrl() === 'http://localhost:3000/'),
+      "Lorsqu'un utilisateur connecté essaie d'accéder à une page réservée à l'administrateur, il n'est pas redirigé. -> KO"
+    );
+    console.log("Lorsqu'un utilisateur connecté essaie d'accéder à une page réservée à l'administrateur, il est redirigé. -> OK")
+
   } catch {
     console.log("Erreur lors du lancement du test. -> KO")
   } finally {
