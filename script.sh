@@ -1,6 +1,9 @@
 echo "Authentification" > report.txt
 node login.js >> report.txt
 
+echo $'\nInscription' >> report.txt
+node register.js >> report.txt
+
 echo $'\nRecherche' >> report.txt
 node searchCityPage.js >> report.txt
 node searchTitlePage.js >> report.txt

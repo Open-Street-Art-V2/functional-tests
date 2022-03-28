@@ -64,14 +64,26 @@ const {
             console.log("La recherche d'utilisateur s'est bien passée. -> OK")
           }).finally(() => console.log("\nConsultation d'un profil utilisateur"))
 
-        const email = await driver.wait(
-            until.elementLocated(By.xpath(
-              '//*[@id="root"]/main/H1[3]'
-            ))
-          );
-        email.getText().then((text) => {
+        const name = await driver.wait(
+          until.elementLocated(By.xpath(
+            '//*[@id="root"]/main/H1'
+          ))
+        );
+        name.getText().then((text) => {
             assert(
-                text.toLowerCase().includes(process.env.USER_PROFIL_EMAIL.toLowerCase()),
+                text.toLowerCase().includes(process.env.USER_PROFIL_NAME.toLowerCase()),
+                "La consultation d'un profil utilisateur ne s'est pas bien passée. -> KO"
+            )
+          })
+
+        const firstname = await driver.wait(
+          until.elementLocated(By.xpath(
+            '//*[@id="root"]/main/H1[2]'
+          ))
+        );
+        firstname.getText().then((text) => {
+            assert(
+                text.toLowerCase().includes(process.env.USER_PROFIL_FIRSTNAME.toLowerCase()),
                 "La consultation d'un profil utilisateur ne s'est pas bien passée. -> KO"
             )
             console.log("La consultation d'un profil utilisateur s'est bien passée. -> OK")

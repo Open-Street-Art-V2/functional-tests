@@ -22,7 +22,7 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     );
     console.log("Lorsqu'un visiteur essaie d'accéder à une page nécessitant une connexion, il est redirigé. -> OK")
 
-    // wait for the page to load (center position)
+    // wait for the page to load
     await driver.sleep(1000);
     
     const loginButton = await driver.wait(
