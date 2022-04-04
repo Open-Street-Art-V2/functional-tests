@@ -53,7 +53,7 @@ const {
 
         const location = await driver.wait(
             until.elementLocated(By.xpath(
-              '//*[@id="root"]/main/div/div[3]/div/figcaption/div'
+              '//*[@id="root"]/main/div/div[3]/div/figcaption/div[2]'
             ))
           );
         location.getText().then((text) => {

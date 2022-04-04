@@ -14,21 +14,9 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
   const driver = await new Builder().forBrowser('chrome').build();
   try {
     // go to app
-    // try to go on a page reserved to connected users
-    await driver.get('http://localhost:3000/profil');
-    assert(
-      (await driver.getCurrentUrl() === 'http://localhost:3000/'),
-      "Lorsqu'un visiteur essaie d'accéder à une page nécessitant une connexion, il n'est pas redirigé. -> KO"
-    );
-    console.log("Lorsqu'un visiteur essaie d'accéder à une page nécessitant une connexion, il est redirigé. -> OK")
-
+    await driver.get('http://localhost:3000/login');
     // wait for the page to load
     await driver.sleep(1000);
-    
-    const loginButton = await driver.wait(
-      until.elementLocated(By.css('button.inline-flex'))
-    );
-    loginButton.click();
 
     console.log("Le formulaire d'authentification s'affiche. -> OK");
 
