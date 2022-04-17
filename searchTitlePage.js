@@ -50,10 +50,11 @@ const {
             until.elementLocated(By.css('div.mt-3:nth-child(1) > a:nth-child(1)'))
           );
         card.click();
+        await driver.sleep(500); 
 
         const title = await driver.wait(
             until.elementLocated(By.xpath(
-                '//*[@id="root"]/main/div/div[3]/div/div'
+                '//*[@id="root"]/div/main/div/div[2]/div'
             ))
         );
         title.getText().then((text) => {

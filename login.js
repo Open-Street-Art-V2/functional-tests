@@ -61,7 +61,7 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
 
     const wp = await driver.wait(
       until.elementLocated(
-        By.xpath('//*[@id="root"]/main/div/form/div[2]/div/div/div[2]')
+        By.xpath('//*[@id="root"]/div/main/div/form/div[2]/div/div/div[2]')
       ),
       500
     );

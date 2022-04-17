@@ -53,7 +53,7 @@ const {
 
         const user = await driver.wait(
             until.elementLocated(By.xpath(
-              '//*[@id="root"]/main/div/div/div[2]/div'
+              '//*[@id="root"]/div/main/div/div/div[2]/div'
             ))
           );
         user.getText().then((text) => {
@@ -66,7 +66,7 @@ const {
 
         const name = await driver.wait(
           until.elementLocated(By.xpath(
-            '//*[@id="root"]/main/H1'
+            '//*[@id="root"]/div/main/H1'
           ))
         );
         name.getText().then((text) => {
@@ -78,7 +78,7 @@ const {
 
         const firstname = await driver.wait(
           until.elementLocated(By.xpath(
-            '//*[@id="root"]/main/H1[2]'
+            '//*[@id="root"]/div/main/H1[2]'
           ))
         );
         firstname.getText().then((text) => {

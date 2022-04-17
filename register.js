@@ -19,7 +19,7 @@ const {
 
         // try to go on register page
         const registerLink = await driver.wait(
-            until.elementLocated(By.xpath('//*[@id="root"]/main/div/div/a'))
+            until.elementLocated(By.xpath('//*[@id="root"]/div/main/div/div/a'))
         );
         registerLink.click();
 
@@ -68,10 +68,10 @@ const {
         //step 1
         await driver.wait(until.elementLocated(By.css('#name'))).sendKeys("titi");
 
-        const date = await driver.wait(until.elementLocated(By.xpath('//*[@id="root"]/main/div/div[3]/main/div/form/div/div[4]/div/div/div/button')))
+        const date = await driver.wait(until.elementLocated(By.xpath('//*[@id="root"]/div/main/div/div[3]/main/div/form/div/div[4]/div/div/div/button')))
         await date.click();
         await date.click();
-        const next = await driver.findElement(By.xpath('//*[@id="root"]/main/div/div[5]/div/button'));
+        const next = await driver.findElement(By.xpath('//*[@id="root"]/div/main/div/div[5]/div/button'));
         await next.click();
 
         // step 2
@@ -80,11 +80,11 @@ const {
         
         
         // validate the form with correct informations
-        const submit = await driver.findElement(By.xpath('//*[@id="root"]/main/div/div[5]/div/button'));
+        const submit = await driver.findElement(By.xpath('//*[@id="root"]/div/main/div/div[5]/div/button'));
         await submit.click();
         const wp = await driver.wait(
             until.elementLocated(
-                By.xpath('//*[@id="root"]/main/div/div[2]/div/div/div')
+                By.xpath('//*[@id="root"]/div/main/div/div[2]/div/div/div')
             ),
             500
         );
