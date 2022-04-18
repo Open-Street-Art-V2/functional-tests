@@ -41,9 +41,9 @@ const {
         await driver.wait(until.elementLocated(By.css('#firstname-helper-text')));
         assert(
             (await driver.findElement(By.css('#firstname-helper-text')).getText()).includes('Le prénom est obligatoire'),
-            "Lorsque un champs est laissé vide, aucun message d'erreur ne s'affiche. -> KO"
+            "Lorsqu'un champ est laissé vide, aucun message d'erreur ne s'affiche. -> KO"
         );
-        console.log("Lorsque un champs est laissé vide, un message d'erreur s'affiche. -> OK");
+        console.log("Lorsqu'un champ est laissé vide, un message d'erreur s'affiche. -> OK");
 
         await firstname.sendKeys("toto");
 
@@ -57,9 +57,9 @@ const {
         await driver.wait(until.elementLocated(By.css('#email-helper-text')));
         assert(
             (await driver.findElement(By.css('#email-helper-text')).getText()).includes('L\'adresse mail est invalide'),
-            "Lorsque un email avec un mauvais format est entré, aucun message d'erreur ne s'affiche. -> KO"
+            "Lorsqu'un email avec un mauvais format est entré, aucun message d'erreur ne s'affiche. -> KO"
         );
-        console.log("Lorsque un email avec un mauvais format est entré, un message d'erreur s'affiche. -> OK")
+        console.log("Lorsqu'un email avec un mauvais format est entré, un message d'erreur s'affiche. -> OK")
 
         await email.sendKeys("toto@test.fr");
 
@@ -90,10 +90,10 @@ const {
         );
         assert(
             (await wp.getText()).includes('Compte créé avec succès'),
-            "Lorsque l'inscription réussi, aucun message de succès ne s'affiche. -> KO"
+            "Lorsque l'inscription réussie, aucun message de succès ne s'affiche. -> KO"
         );
     
-        console.log("Lorsque l'inscription réussi, un message de succès s'affiche. -> OK"); 
+        console.log("Lorsque l'inscription réussie, un message de succès s'affiche. -> OK"); 
     } catch {
         console.log("Erreur lors du lancement du test. -> KO")
     } finally {

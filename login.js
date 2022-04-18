@@ -28,10 +28,10 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     assert(
       (await driver.findElement(By.css('#email-helper-text')).getText()) ===
         'Email invalide',
-      "Lorsque un email avec un mauvais format est entré, aucun message d'erreur ne s'affiche. -> KO"
+      "Lorsqu'un email avec un mauvais format est entré, aucun message d'erreur ne s'affiche. -> KO"
     );
 
-    console.log("Lorsque un email avec un mauvais format est entré, un message d'erreur s'affiche. -> OK");
+    console.log("Lorsqu'un email avec un mauvais format est entré, un message d'erreur s'affiche. -> OK");
 
     await email.clear();
     await driver.sleep(500);
@@ -49,9 +49,9 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     const submit = await driver.findElement(By.xpath('//*[@id="mui-1"]'));
     assert(
       (await submit.isEnabled()),
-      "Lorsque un des champs est vide, le bouton de validation n'est pas désactivé. -> KO"
+      "Lorsqu'un des champ est vide, le bouton de validation n'est pas désactivé. -> KO"
     );
-    console.log("Lorsque un des champs est vide, le bouton de validation est désactivé. -> OK")
+    console.log("Lorsqu'un des champ est vide, le bouton de validation est désactivé. -> OK")
 
     // incorrect contact details
     await password.clear();
@@ -67,10 +67,10 @@ chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
     );
     assert(
       (await wp.getText()) === 'Coordonnées saisies incorrectes',
-      "Lorsque des identifiants de connexion incorrectes sont données, aucun message d'erreur ne s'affiche. -> KO"
+      "Lorsque des identifiants de connexions incorrectes sont donnés, aucun message d'erreur ne s'affiche. -> KO"
     );
 
-    console.log("Lorsque des identifiants de connexion incorrectes sont données, un message d'erreur s'affiche. -> OK");
+    console.log("Lorsque des identifiants de connexions incorrectes sont donnés, un message d'erreur s'affiche. -> OK");
 
     // correct contact details
     await password.clear();

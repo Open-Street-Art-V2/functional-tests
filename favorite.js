@@ -97,19 +97,19 @@ const {
         ).click();
 
         const deleteStar = await driver.wait(
-            until.elementLocated(By.xpath('//*[@id="root"]/main/div/div/button'))
+            until.elementLocated(By.xpath('//*[@id="root"]/div/main/div/div/button'))
         );
         deleteStar.click();
 
         const titleNotFavoriteArt = await driver.wait(
             until.elementLocated(By.xpath(
-                '//*[@id="root"]/main/div/div[2]/div'
+                '//*[@id="root"]/div/main/div/div[2]/div'
             ))
         ).getText();
 
         // go back to the list to check that the art is not displayed
         await driver.wait(
-            until.elementLocated(By.xpath('//*[@id="root"]/div[2]/button'))
+            until.elementLocated(By.xpath('//*[@id="root"]/div/div[2]/button'))
         ).click();
 
         const favorites2 = await driver.wait(

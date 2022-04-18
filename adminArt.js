@@ -45,9 +45,9 @@ const {
         const helper = await driver.wait(until.elementLocated(By.css('#title-helper-text')));
         helper.getText().then((txt) => {
             assert(txt === 'Titre invalide',
-                "Lorsque un champs avec un mauvais format est entré, aucun message d'erreur ne s'affiche. -> KO"
+                "Lorsqu'un champ avec un mauvais format est entré, aucun message d'erreur ne s'affiche. -> KO"
             );
-            console.log("Lorsque un champs avec un mauvais format est entré, un message d'erreur s'affiche. -> OK");
+            console.log("Lorsqu'un champ avec un mauvais format est entré, un message d'erreur s'affiche. -> OK");
         })
 
         // correct info
@@ -58,7 +58,7 @@ const {
         await desc.sendKeys(process.env.DESCRIPTION);
 
         const addImage = await driver.findElement(By.css('#icon-button-file'));
-        await addImage.sendKeys("/home/manon/Images/OSA/rouen_art2.jpg");
+        await addImage.sendKeys(process.env.IMAGE_PATH);
         await driver.sleep(500);
 
         const position = await driver.findElement(
@@ -104,9 +104,23 @@ const {
 
         // consult an art
         await driver.get('http://localhost:3000');
-        await driver.sleep(2000);
+        await driver.sleep(500);
+        await driver.findElement(
+            By.css('#SearchBar')
+        ).sendKeys(process.env.TITLE);;
+        await driver.findElement(
+            By.css('#long-button')
+        ).click();
+        await driver.findElement(
+            By.xpath('//*[@id="fade-menu"]/div[3]/ul/li[2]')
+        ).click();
+        await driver.findElement(
+            By.xpath('//*[@id="root"]/div/div/div/div[2]/div/div/div/button')
+        ).click();
+        await driver.sleep(1000);
+
         const art = await driver.findElement(
-            By.xpath('//*[contains(@class, \'overlays\')]/div[3]/button')
+            By.xpath('//*[contains(@class, \'overlays\')]/div[2]/button')
         );
         await art.click();
         console.log("La consultation d'une oeuvre fonctionne. -> OK");
@@ -131,18 +145,32 @@ const {
         const modifyTitle = await driver.findElement(By.css('#title'));
         assert(
             (await modifyTitle.getAttribute("value") === title),
-            "Le formulaire de modification ne s'affiche pas avec les champs pré-remplis. -> KO"
+            "Le formulaire de modification ne s'affiche pas avec les champ pré-remplis. -> KO"
         );
-        console.log("Le formulaire de modification s'affiche avec les champs pré-remplis. -> OK");
+        console.log("Le formulaire de modification s'affiche avec les champ pré-remplis. -> OK");
 
 
 
         // delete the art
         const returnButton = await driver.findElement(By.xpath('//*[@id="btnRetour"]/a'));
         await returnButton.click();
-        await driver.sleep(2000);
+        await driver.sleep(500);
+        await driver.findElement(
+            By.css('#SearchBar')
+        ).sendKeys(process.env.TITLE);;
+        await driver.findElement(
+            By.css('#long-button')
+        ).click();
+        await driver.findElement(
+            By.xpath('//*[@id="fade-menu"]/div[3]/ul/li[2]')
+        ).click();
+        await driver.findElement(
+            By.xpath('//*[@id="root"]/div/div/div/div[2]/div/div/div/button')
+        ).click();
+        await driver.sleep(1000);
+
         const art2 = await driver.findElement(
-            By.xpath('//*[contains(@class, \'overlays\')]/div[3]/button')
+             By.xpath('//*[contains(@class, \'overlays\')]/div[2]/button')
         );
         await art2.click();
         // scroll inside the popup to show all the details of the art
